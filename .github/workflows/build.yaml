@@ -31,7 +31,7 @@ jobs:
         shell: bash
 
       - name: Test
-        run: dotnet test --no-build --framework ${{ inputs.target-framework }}
+        run: dotnet test --no-build --framework net7.0
         shell: bash
         continue-on-error: true
     
