@@ -1,0 +1,37 @@
+name: "[production] Build TestProject"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 #fetch-depth is needed for GitVersion
+
+      - name: Set up .Net 7.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+        dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+        shell: bash
+
+      - name: Build 
+        run: dotnet build --configuration Release --no-restore
+        shell: bash
+
+      - name: Test
+        run: dotnet test --no-build --framework ${{ inputs.target-framework }}
+        shell: bash
+        continue-on-error: true
+    
