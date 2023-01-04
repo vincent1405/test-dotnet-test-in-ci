@@ -31,7 +31,6 @@ jobs:
         shell: bash
 
       - name: Test
-        run: dotnet test --no-build --framework net7.0
+        run: dotnet test --no-build
         shell: bash
-        continue-on-error: true
     
